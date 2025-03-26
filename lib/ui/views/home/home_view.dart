@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:hava_havai/ui/common/app_colors.dart';
 import 'package:hava_havai/ui/common/ui_helpers.dart';
 
+import '../../common/app_text_styles.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -16,8 +17,35 @@ class HomeView extends StackedView<HomeViewModel> {
         backgroundColor: appBarColor,
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: (){}, icon: Icon(Icons.shopping_cart)
+          Stack(
+            children: <Widget>[
+              IconButton(
+                  onPressed: (){}, icon: Icon(Icons.shopping_cart)
+              ),
+              Positioned(
+                right: 11,
+                top: 11,
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 15,
+                    minHeight: 15,
+                  ),
+                  child: Text(
+                    '${viewModel.cartValue}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
           )
         ],
       ),
@@ -34,6 +62,7 @@ class HomeView extends StackedView<HomeViewModel> {
           final product = viewModel.products[index];
           double discount = product.discountPercentage;
           String discountedPrice = (product.price *(1-discount/100)).toStringAsFixed(2);
+          int quantity = viewModel.addedQuantity[index];
           return Card(
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -56,9 +85,9 @@ class HomeView extends StackedView<HomeViewModel> {
                     Positioned(
                       bottom: 0,
                       right: 10,
-                      child: ElevatedButton(
-                        onPressed: () {
-                        },
+                      child: quantity == 0
+                          ? ElevatedButton(
+                        onPressed: () {viewModel.addQuantity(index);},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.pinkAccent,
@@ -69,7 +98,33 @@ class HomeView extends StackedView<HomeViewModel> {
                           elevation: 4,
                         ),
                         child: Text("Add"),
-                      ),
+                      ) 
+                          :ElevatedButton(
+                          onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.pinkAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          elevation: 4,
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                        ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.remove),
+                                onPressed: () {viewModel.removeQuantity(index);},
+                              ),
+                              Text("$quantity"),
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {viewModel.addQuantity(index);},
+                              ),
+                            ],
+                          ),
+                      )
                     ),
                   ],
                 ),
@@ -85,23 +140,27 @@ class HomeView extends StackedView<HomeViewModel> {
                         children: [
                           Text(
                             '₹$discountedPrice',
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyles.discountedPrice,
                           ),
                           horizontalSpaceSmall,
                           Text(
                             '₹${product.price.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              color: Colors.grey,
-                            ),
+                            style: TextStyles.realPrice
                           ),
                         ],
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        '${discount.toStringAsFixed(2)}% OFF',
-                        style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                      ),
+                      Text.rich(TextSpan(children: [
+                        TextSpan(
+                          text: '${discount.toStringAsFixed(2)}% ',
+                          style: TextStyles.highlight.copyWith(fontSize: 12),
+                        ),
+                        TextSpan(
+                          text: 'OFF',
+                          style:
+                          TextStyles.highlight,
+                        ),
+                      ])),
                     ],
                   ),
                 ),

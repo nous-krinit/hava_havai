@@ -13,23 +13,26 @@ class HomeViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _apiService = locator<FetchDataService>();
 
-  String get counterLabel => 'Counter is: $_counter';
   List<Product> get products => _apiService.getCachedProducts();
+  late List<int> addedQuantity;
+  int cartValue = 0;
 
-  int _counter = 0;
+  HomeViewModel() {
+    addedQuantity = List.filled(products.length, 0);
+  }
 
-  void incrementCounter() {
-    _counter++;
+  void addQuantity(int index){
+    addedQuantity[index] += 1;
+    cartValue += 1 ;
     rebuildUi();
   }
 
-  void showDialog() {
-    _dialogService.showCustomDialog(
-      variant: DialogType.infoAlert,
-      title: 'Stacked Rocks!',
-      description: 'Give stacked $_counter stars on Github',
-    );
+  void removeQuantity(int index){
+    addedQuantity[index] -= 1;
+    cartValue -= 1 ;
+    rebuildUi();
   }
+
 
   void showBottomSheet() {
     _bottomSheetService.showCustomSheet(
