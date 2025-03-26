@@ -13,14 +13,15 @@ class HomeView extends StackedView<HomeViewModel> {
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Catalogue'),
+        title: Text('Catalogue'),
         backgroundColor: appBarColor,
         centerTitle: true,
         actions: [
           Stack(
             children: <Widget>[
               IconButton(
-                  onPressed: (){}, icon: Icon(Icons.shopping_cart)
+                  onPressed: () {viewModel.navigateToCart();},
+                  icon: Icon(Icons.shopping_cart, size: 32,)
               ),
               Positioned(
                 right: 11,
@@ -61,11 +62,13 @@ class HomeView extends StackedView<HomeViewModel> {
         itemBuilder: (context, index) {
           final product = viewModel.products[index];
           double discount = product.discountPercentage;
-          String discountedPrice = (product.price *(1-discount/100)).toStringAsFixed(2);
+          String discountedPrice =
+              (product.price * (1 - discount / 100)).toStringAsFixed(2);
           int quantity = viewModel.addedQuantity[index];
           return Card(
             color: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             elevation: 4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +77,8 @@ class HomeView extends StackedView<HomeViewModel> {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(12)),
                       child: Image.network(
                         product.thumbnail,
                         fit: BoxFit.cover,
@@ -83,49 +87,55 @@ class HomeView extends StackedView<HomeViewModel> {
                       ),
                     ),
                     Positioned(
-                      bottom: 0,
-                      right: 10,
-                      child: quantity == 0
-                          ? ElevatedButton(
-                        onPressed: () {viewModel.addQuantity(index);},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.pinkAccent,
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          elevation: 4,
-                        ),
-                        child: Text("Add"),
-                      ) 
-                          :ElevatedButton(
-                          onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.pinkAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          elevation: 4,
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                        ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.remove),
-                                onPressed: () {viewModel.removeQuantity(index);},
-                              ),
-                              Text("$quantity"),
-                              IconButton(
-                                icon: Icon(Icons.add),
-                                onPressed: () {viewModel.addQuantity(index);},
-                              ),
-                            ],
-                          ),
-                      )
-                    ),
+                        bottom: 0,
+                        right: 10,
+                        child: quantity == 0
+                            ? ElevatedButton(
+                                onPressed: () {
+                                  viewModel.addQuantity(index);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.pinkAccent,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  elevation: 4,
+                                ),
+                                child: Text("Add"),
+                              )
+                            : ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.pinkAccent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  elevation: 4,
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.remove),
+                                      onPressed: () {
+                                        viewModel.removeQuantity(index);
+                                      },
+                                    ),
+                                    Text("$quantity"),
+                                    IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () {
+                                        viewModel.addQuantity(index);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              )),
                   ],
                 ),
                 Padding(
@@ -133,8 +143,10 @@ class HomeView extends StackedView<HomeViewModel> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(product.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      Text(product.brand ?? 'Generic', style: const TextStyle(color: Colors.grey)),
+                      Text(product.title,
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      Text(product.brand ?? 'Generic',
+                          style: const TextStyle(color: Colors.grey)),
                       verticalSpaceSmall,
                       Row(
                         children: [
@@ -143,10 +155,8 @@ class HomeView extends StackedView<HomeViewModel> {
                             style: TextStyles.discountedPrice,
                           ),
                           horizontalSpaceSmall,
-                          Text(
-                            '₹${product.price.toStringAsFixed(2)}',
-                            style: TextStyles.realPrice
-                          ),
+                          Text('₹${product.price.toStringAsFixed(2)}',
+                              style: TextStyles.realPrice),
                         ],
                       ),
                       const SizedBox(height: 4),
@@ -157,8 +167,7 @@ class HomeView extends StackedView<HomeViewModel> {
                         ),
                         TextSpan(
                           text: 'OFF',
-                          style:
-                          TextStyles.highlight,
+                          style: TextStyles.highlight,
                         ),
                       ])),
                     ],

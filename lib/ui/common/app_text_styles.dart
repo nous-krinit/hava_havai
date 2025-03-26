@@ -11,8 +11,6 @@ class TextStyles {
     color: Colors.grey,
   );
 
-  static TextStyle highlight = const TextStyle(
-      color: Colors.red,
-      fontWeight: FontWeight.bold
-  );
+  static TextStyle highlight =
+      const TextStyle(color: Colors.red, fontWeight: FontWeight.bold);
 }

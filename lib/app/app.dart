@@ -5,13 +5,15 @@ import 'package:hava_havai/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:hava_havai/services/fetch_data_service.dart';
+import 'package:hava_havai/ui/views/cart/cart_view.dart';
 // @stacked-import
 
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    // @stacked-route
+    MaterialRoute(page: CartView),
+// @stacked-route
   ],
   dependencies: [
     LazySingleton(classType: BottomSheetService),

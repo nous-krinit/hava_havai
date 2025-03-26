@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -11,7 +10,7 @@ class FetchDataService with ListenableServiceMixin {
     listenToReactiveValues([_cachedProducts]);
   }
   static const String apiUrl = "https://dummyjson.com/products";
-  List<Product> _cachedProducts =[];
+  List<Product> _cachedProducts = [];
 
   Future<List<Product>> fetchProducts() async {
     final response = await http.get(Uri.parse(apiUrl));

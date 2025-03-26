@@ -7,6 +7,7 @@ import 'dart:async' as _i5;
 import 'dart:ui' as _i6;
 
 import 'package:flutter/material.dart' as _i4;
+import 'package:hava_havai/models/product.dart' as _i8;
 import 'package:hava_havai/services/fetch_data_service.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i3;
@@ -688,4 +689,69 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
 /// A class which mocks [FetchDataService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFetchDataService extends _i1.Mock implements _i7.FetchDataService {}
+class MockFetchDataService extends _i1.Mock implements _i7.FetchDataService {
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i5.Future<List<_i8.Product>> fetchProducts() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchProducts,
+          [],
+        ),
+        returnValue: _i5.Future<List<_i8.Product>>.value(<_i8.Product>[]),
+        returnValueForMissingStub:
+            _i5.Future<List<_i8.Product>>.value(<_i8.Product>[]),
+      ) as _i5.Future<List<_i8.Product>>);
+
+  @override
+  List<_i8.Product> getCachedProducts() => (super.noSuchMethod(
+        Invocation.method(
+          #getCachedProducts,
+          [],
+        ),
+        returnValue: <_i8.Product>[],
+        returnValueForMissingStub: <_i8.Product>[],
+      ) as List<_i8.Product>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
